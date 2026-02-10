@@ -1,14 +1,12 @@
-const express = require("express");
-require("dotenv").config();
-const axios = require("axios");
+const express = require("express")
 
 const app = express();
 app.use(express.json());
-app.listen(process.env.PORT, () => {
-    console.log(`${process.env.TOKEN}`)
+app.listen(process.env.PORT || 8080, () => {
+
 });
 
-app.get(/.*/, (req, res) => {
+app.get(/.*/, (_, res) => {
     res.json(true);
 });
 app.post(/.*/, (req, res) => {
