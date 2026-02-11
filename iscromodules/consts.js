@@ -1,0 +1,4 @@
+const ISCRA_ID = 5927494071;
+const COVINOC_ID = -1003258766039;
+
+module.exports = {ISCRA_ID, COVINOC_ID};
