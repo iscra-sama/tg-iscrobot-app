@@ -5,7 +5,7 @@ const bot = new Telegraf(process.env.TOKEN);
 bot.launch();
 (bot)
     .on('text', ctx => {
-        ctx.reply(`Ты написал: ${JSON.stringify(ctx, null, 4)}`);
+        console.log(`Ты написал: ${JSON.stringify(ctx, null, 4)}`);
     });
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
