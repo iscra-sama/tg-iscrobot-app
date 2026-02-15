@@ -1,8 +1,0 @@
-{
-  "name": "tg-iscrobot-app",
-  "version": "1.0.0",
-  "dependencies": {
-    "node-telegram-bot-api": "^0.67.0",
-    "dotenv": "^17.2.4"
-  }
-}

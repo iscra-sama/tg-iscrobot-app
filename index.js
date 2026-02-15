@@ -1,21 +1,12 @@
-const TelegramAPI = require("node-telegram-bot-api");
+const { Telegraf } = require('telegraf');
 require("dotenv").config();
-const consts = require("./iscromodules/consts");
 
-const bot = new TelegramAPI(process.env.TOKEN, {webHook: true});
-bot.on("message", async msg => {
-    if (msg.from.id === consts.ISCRA_ID && msg.chat.id === consts.COVINOC_ID)
-        try {
-            await bot.deleteMessage(consts.COVINOC_ID, msg.message_id);
-        }
-        catch (error) {
-            // dbg!
-            console.error(error);
-        }
-});
-bot.on("polling_error", err => {
-    console.log(err.code);
-})
-bot.on("webhook_error", err => {
-    console.log(err.code);
-})
+const bot = new Telegraf(process.env.TOKEN);
+bot.launch();
+(bot)
+    .on('text', ctx => {
+        ctx.reply(`Ты написал: ${ctx}`);
+    });
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
