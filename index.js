@@ -4,8 +4,8 @@ require("dotenv").config();
 const bot = new Telegraf(process.env.TOKEN);
 bot.launch();
 (bot)
-    .on('text', ctx => {
-        console.log(`Ты написал: ${JSON.stringify(ctx.message, null, 4)}`);
+    .command("iscrodbg", async ctx => {
+        await ctx.reply(`Ви напейсали: ${ctx.message.text}`);
     });
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
