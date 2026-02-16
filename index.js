@@ -11,7 +11,10 @@ bot.launch({
 (bot)
     .command("iscrodbg", async ctx => {
         await ctx.reply(`Ви напейсали: ${ctx.message.text}`);
-    });
+    })
+    .on("text", ctx => {
+        console.log(`Ви напейсали: ${ctx.message.text}`);
+    })
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
