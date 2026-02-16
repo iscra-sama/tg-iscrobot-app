@@ -1,11 +1,16 @@
-const { Telegraf } = require('telegraf');
+const express = require("express");
+const { Telegraf } = require("telegraf");
 require("dotenv").config();
 
 const bot = new Telegraf(process.env.TOKEN);
-bot.launch({
-    polling: {
-        port: process.env.PORT || 8080,
-    }
+const app = express();
+
+app.listen(process.env.PORT || 8080);
+app.use(await bot.createWebhook({
+    domain: process.env.DOMAIN
+}));
+app.get(/.*/, (req, res) => {
+    res.end("Hello, Iscra-chan!");
 });
 (bot)
     .command("iscroecho", async ctx => {
@@ -13,7 +18,4 @@ bot.launch({
     })
     .on("text", ctx => {
         console.log(`Ви напейсали: ${ctx.message.text}`);
-    })
-
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+    });
