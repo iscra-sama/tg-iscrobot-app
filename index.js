@@ -9,7 +9,7 @@ bot.launch({
     }
 });
 (bot)
-    .command("iscrodbg", async ctx => {
+    .command("iscroecho", async ctx => {
         await ctx.reply(`Ви напейсали: ${ctx.message.text}`);
     })
     .on("text", ctx => {
