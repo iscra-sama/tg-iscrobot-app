@@ -4,7 +4,7 @@ require("dotenv").config();
 const bot = new Telegraf(process.env.TOKEN);
 bot.launch({
     polling: {
-        port: process.env.PORT,
+        port: process.env.PORT || 8080,
         domain: process.env.DOMAIN
     }
 });
