@@ -6,9 +6,9 @@ const bot = new Telegraf(process.env.TOKEN);
 const app = express();
 
 app.listen(process.env.PORT || 8080);
-app.use(await bot.createWebhook({
+(async () => app.use(bot.createWebhook({
     domain: process.env.DOMAIN
-}));
+})))();
 app.get(/.*/, (req, res) => {
     res.end("Hello, Iscra-chan!");
 });
@@ -19,3 +19,6 @@ app.get(/.*/, (req, res) => {
     .on("text", ctx => {
         console.log(`Ви напейсали: ${ctx.message.text}`);
     });
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
