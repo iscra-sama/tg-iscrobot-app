@@ -14,8 +14,12 @@ app.listen(process.env.PORT || 8080);
 app.get(/.*/, (req, res) => {
     res.end("Hello, Iscra-chan!");
 });
+
 let isHuurmoonecMuted = false;
 (bot)
+    .catch(err => {
+        console.error("Error catched", err);
+    })
     .command("iscroecho", async ctx => {
         await ctx.reply(`Ви напейсали: ${ctx.message.text}`);
     })
