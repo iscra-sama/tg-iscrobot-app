@@ -39,15 +39,15 @@ let isHuurmoonecMuted = false;
             await ctx.reply(`Вы ввели невалидный набор символов после первого аргумента: ${__.join(" ")} (> <). Однако они были успешно отрезаны.`);
         }
         switch (true) {
-            case "-t":
+            case flag === "-t":
                 await ctx.reply("Huurmōnec заглушён.");
                 isHuurmoonecMuted = true;
                 break;
-            case "-f":
+            case flag === "-f":
                 await ctx.reply("Huurmōnec может пейсать.");
                 isHuurmoonecMuted = false;
                 break;
-            case "-n":
+            case flag === "-n":
                 await ctx.reply(`Право Huurmōnec изменено: теперь он ${isHuurmoonecMuted ? "может" : "не может"} писать.`)
                 isHuurmoonecMuted = !isHuurmoonecMuted;
                 break;
