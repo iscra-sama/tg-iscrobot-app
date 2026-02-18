@@ -62,5 +62,11 @@ let isHuurmoonecMuted = false;
         }
     });
 
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+process.once('SIGINT', async () => {
+    await bot.telegram.deleteWebhook();
+    bot.stop('SIGINT');
+});
+process.once('SIGTERM', async () => {
+    await bot.telegram.deleteWebhook();
+    bot.stop('SIGTERM');
+});
