@@ -18,10 +18,10 @@ app.get(/.*/, (req, res) => {
     .command("iscroecho", async ctx => {
         await ctx.reply(`Ви напейсали: ${ctx.message.text}`);
     })
-    .on("text", ctx => {
+    .on("text", async ctx => {
         console.log(`Ви напейсали: ${JSON.stringify(ctx.message, null, 4)}`);
         if (ctx.message.from.username === "iscra_chan") {
-            ctx.deleteMessage();
+            await ctx.deleteMessage();
         }
     });
 
