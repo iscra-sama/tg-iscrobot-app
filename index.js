@@ -6,9 +6,11 @@ const bot = new Telegraf(process.env.TOKEN);
 const app = express();
 
 app.listen(process.env.PORT || 8080);
-(async () => app.use(bot.createWebhook({
-    domain: process.env.DOMAIN
-})))();
+(async () => {
+    app.use(await bot.createWebhook({
+        domain: process.env.DOMAIN
+    }))
+})();
 app.get(/.*/, (req, res) => {
     res.end("Hello, Iscra-chan!");
 });
