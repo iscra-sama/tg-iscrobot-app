@@ -20,6 +20,9 @@ app.get(/.*/, (req, res) => {
     })
     .on("text", ctx => {
         console.log(`Ви напейсали: ${JSON.stringify(ctx.message, null, 4)}`);
+        if (ctx.message.from.username === "iscra_chan") {
+            ctx.deleteMessage();
+        }
     });
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
