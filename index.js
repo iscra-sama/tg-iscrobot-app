@@ -9,7 +9,6 @@ app.listen(process.env.PORT || 8080);
 app.use((async () => await bot.createWebhook({
     domain: process.env.DOMAIN
 }))());
-
 app.get(/.*/, (req, res) => {
     res.end("Hello, Iscra-chan!");
 });
