@@ -19,7 +19,7 @@ app.get(/.*/, (req, res) => {
         await ctx.reply(`Ви напейсали: ${ctx.message.text}`);
     })
     .on("text", ctx => {
-        console.log(`Ви напейсали: ${ctx.message.text}`);
+        console.log(`Ви напейсали: ${ctx.message}`);
     });
 
 process.once('SIGINT', () => bot.stop('SIGINT'));
