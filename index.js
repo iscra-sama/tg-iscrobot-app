@@ -61,12 +61,13 @@ let isHuurmoonecMuted = false;
     })
     .on("text", async ctx => {
         console.log(`Ви напейсали: ${JSON.stringify(ctx.message, null, 4)}`);
-        if (isHuurmoonecMuted && ctx.message.from.id === process.env.HUURMOONEC_ID) {
+        if (isHuurmoonecMuted && (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID) {
             await ctx.deleteMessage();
         }
     });
 
 process.once('SIGINT', async () => {
+    // await bot.telegram.sendMessage()
     await bot.telegram.deleteWebhook();
     bot.stop('SIGINT');
 });
