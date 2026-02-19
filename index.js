@@ -68,8 +68,8 @@ let isHuurmoonecMuted = false;
     });
 
 (async () => {
-    await bot.telegram.sendMessage(process.env.COVINOC_ID, "Я родился! ^___^");
-    await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, "Я родился! ^___^");
+    await bot.telegram.sendMessage(process.env.COVINOC_ID, "Я родился! ^___^ Причина: ты мя сейчас врубила и деплой окончен.");
+    await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, "Я родился! ^___^ Причина: ты мя сейчас врубила и деплой окончен.");
 })();
 process
     .on('SIGINT', async () => {
