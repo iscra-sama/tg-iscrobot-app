@@ -29,7 +29,7 @@ let isHuurmoonecMuted = false;
         let [_, flag, ...__] = (ctx.message.text).trim().split(" ");
 
         if (flag === undefined) {
-            return await ctx.reply(`Заблокировать сообщения Huurmōnec. На данный момент ${isHuurmoonecMuted ? "" : "не"} забанен. Команда доступна админам. Доки: \n /iscromute -t (мут); \n /iscromute -f (размут); \n /iscromute -n (смена состояния на обратное);`);
+            return await ctx.reply(`Заблокировать сообщения Huurmōnec. На данный момент ${isHuurmoonecMuted ? "" : "не"} забанен. Команда доступна админам. Работает по принципу удаления каждого поступающего от него сообщения. Доки: \n /iscromute -t (мут); \n /iscromute -f (размут); \n /iscromute -n (смена состояния на обратное);`);
         }
         switch (true) {
             case ctx.message.from.id === process.env.HUURMOONEC_ID:
