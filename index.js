@@ -60,7 +60,7 @@ let isHuurmoonecMuted = false;
                 await ctx.reply("Неверный аргумент команды. Читайте документацию (^^)\".");
         }
     })
-    .on("text", async ctx => {
+    .on("message", async ctx => {
         console.log(`Ви напейсали: ${JSON.stringify(ctx.message, null, 4)}`);
         if (isHuurmoonecMuted && (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID) {
             await ctx.deleteMessage();
