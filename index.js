@@ -8,7 +8,8 @@ const app = express();
 app.listen(process.env.PORT || 8080);
 (async () =>
     app.use(await bot.createWebhook({
-        domain: process.env.DOMAIN
+        domain: process.env.DOMAIN,
+        port: process.env.PORT || 8080,
     }))
 )();
 app.get(/.*/, (req, res) => {
@@ -70,15 +71,16 @@ let isHuurmoonecMuted = false;
     await bot.telegram.sendMessage(process.env.COVINOC_ID, "Я родился! ^___^");
     await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, "Я родился! ^___^");
 })();
-process.once('SIGINT', async () => {
-    await bot.telegram.sendMessage(process.env.COVINOC_ID, "Я упал! Причина: ты мя вырубила.");
-    await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, "Я упал! Причина: ты мя вырубила.");
-    await bot.telegram.deleteWebhook();
-    bot.stop('SIGINT');
-});
-process.once('SIGTERM', async () => {
-    await bot.telegram.sendMessage(process.env.COVINOC_ID, `Я упал! Ищи причину в ошибке с корутинами API.`);
-    await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, `Я упал! Ищи причину в ошибке с корутинами API.`);
-    await bot.telegram.deleteWebhook();
-    bot.stop('SIGTERM');
-});
+process
+    .on('SIGINT', async () => {
+        await bot.telegram.sendMessage(process.env.COVINOC_ID, "Я упал! Причина: ты мя вырубила.");
+        await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, "Я упал! Причина: ты мя вырубила.");
+        await bot.telegram.deleteWebhook();
+        bot.stop('SIGINT');
+    })
+    .on('SIGTERM', async () => {
+        await bot.telegram.sendMessage(process.env.COVINOC_ID, `Я упал! Ищи причину в ошибке с API.`);
+        await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, `Я упал! Ищи причину в ошибке с API.`);
+        await bot.telegram.deleteWebhook();
+        bot.stop('SIGTERM');
+    });
