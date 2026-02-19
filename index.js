@@ -16,7 +16,7 @@ app.get(/.*/, (req, res) => {
     res.end("Hello, Iscra-chan!");
 });
 
-let isHuurmoonecMuted = false;
+let isHuurmoonecMuted = true;
 (bot)
     .catch(err => {
         console.error("Error catched", err);
