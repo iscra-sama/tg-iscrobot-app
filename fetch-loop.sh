@@ -1,2 +1,8 @@
 #! /bin/bash
-echo "sfnhu9rn9uerdbnreiubvhdf"
+source .env
+# @debug(printf '%s' "$DOMAIN" | od -c)
+while true; do
+  curl "${DOMAIN%$'\r'}" > /dev/null
+  echo "Fetched at $(date +'%Y-%m-%dT%H:%M:%S')"
+  sleep 512
+done
