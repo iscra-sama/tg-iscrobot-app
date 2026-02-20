@@ -29,7 +29,7 @@ let isHuurmoonecMuted = false;
         let [_, flag, ...__] = (ctx.message.text).trim().split(" ");
 
         if (flag === undefined) {
-            return await ctx.reply(`Заблокировать сообщения Huurmōnec. На данный момент ${isHuurmoonecMuted ? "" : "не"} забанен. Команда доступна админам. Работает по принципу удаления каждого поступающего от него сообщения. Доки: \n /iscromute -t (мут); \n /iscromute -f (размут); \n /iscromute -n (смена состояния на обратное);`);
+            return await ctx.reply(`Заблокировать сообщения Huurmōnec. На данный момент ${isHuurmoonecMuted ? "" : "не"} забанен. Команда доступна админам. Работает по принципу автоудаления каждого поступающего от него сообщения. Доки: \n 1) «/iscromute -t» (мут); \n 2) «/iscromute -f» (размут); \n 3) «/iscromute -n» (смена состояния на обратное). \n У аргументов команды есть синонимы: \n 1) -t/--true; \n 2) -f/--false; 3) -n/-i/-c/--neg/--not/--inv/--compl.`)
         }
         switch (true) {
             case ctx.message.from.id === process.env.HUURMOONEC_ID:
@@ -45,14 +45,22 @@ let isHuurmoonecMuted = false;
         }
         switch (flag) {
             case "-t":
+            case "--true":
                 await ctx.reply("Huurmōnec заглушён.");
                 isHuurmoonecMuted = true;
                 break;
             case "-f":
+            case "--false":
                 await ctx.reply("Huurmōnec может пейсать.");
                 isHuurmoonecMuted = false;
                 break;
             case "-n":
+            case "-i":
+            case "-c":
+            case "--not":
+            case "--neg":
+            case "--inv":
+            case "--compl":
                 await ctx.reply(`Право Huurmōnec изменено: теперь он ${isHuurmoonecMuted ? "может" : "не может"} писать.`)
                 isHuurmoonecMuted = !isHuurmoonecMuted;
                 break;
