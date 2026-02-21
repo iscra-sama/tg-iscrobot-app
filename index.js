@@ -81,7 +81,7 @@ bot
 setInterval(async () => {
     console.log(process.env.COVINOC_ID, `Мой скедулер скоро пнёт REST API (${config.REST_API_URL}), чтобы тот мя взаимно пнул…`);
     // await bot.telegram.sendMessage(process.env.COVINOC_ID, `Мой скедулер скоро пнёт REST API (${config.REST_API_URL}), чтобы тот мя взаимно пнул…`);
-    await axios.post(config.REST_API_URL)
+    await axios.post(config.REST_API_URL, process.env.DOMAIN)
         .then(async _ => {
             console.log(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я не спал)!");
             // await bot.telegram.sendMessage(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я не спал)!")
