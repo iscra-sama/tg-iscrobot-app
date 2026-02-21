@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const { Telegraf } = require("telegraf");
 require("dotenv").config();
-const config = require("iscromodules/config");
+const config = require("iscromodules/config.js");
 
 const bot = new Telegraf(process.env.TOKEN);
 const app = express();
