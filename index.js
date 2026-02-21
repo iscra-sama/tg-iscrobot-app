@@ -89,8 +89,16 @@ setInterval(async () => {
             // await bot.telegram.sendMessage(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я не спал)!")
         })
         .catch(async err => {
-            console.log(process.env.COVINOC_ID, `У мя ошибка с фетчем: ${JSON.stringify(err, null, 2)}`);
-            // await bot.telegram.sendMessage(process.env.COVINOC_ID, `У мя ошибка с фетчем: ${JSON.stringify(err, null, 2)}`)
+            if (error.response) {
+                console.log(`REST API ответил ошибкой ${err.response.status}: «${err.response.data}»`);
+                // await bot.telegram.sendMessage(process.env.COVINOC_ID, `REST API ответил ошибкой: ${JSON.stringify(err, null, 2)}`)
+            } else if (error.request) {
+                console.log(`Мой фетч прервался с ошибкой: «${error.request}»`);
+                // await bot.telegram.sendMessage(process.env.COVINOC_ID, `Мой фетч прервался с ошибкой: «${error.request}»`);
+            } else {
+                console.log(`В ходе настроек моего фетча случилась ошибка: «${error.message}»`);
+                // await bot.telegram.sendMessage(process.env.COVINOC_ID, `В ходе настроей моего фетча случилась ошибка: «${error.message}»`);
+            }
         });
 }, config.FETCH_LOOP_PERIOD);
 process
