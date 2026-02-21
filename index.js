@@ -1,6 +1,8 @@
 const express = require("express");
+const axios = require("axios");
 const { Telegraf } = require("telegraf");
 require("dotenv").config();
+const config = require("iscromodules/config");
 
 const bot = new Telegraf(process.env.TOKEN);
 const app = express();
@@ -17,19 +19,17 @@ app.get(/.*/, (req, res) => {
 });
 
 let isHuurmoonecMuted = false;
-(bot)
-    .catch(err => {
-        console.error("Error catched", err);
-    })
-    .command("iscroecho", async ctx => {
-        await ctx.reply(`Ви напейсали: ${ctx.message.text}`);
-    })
+bot
+    .catch(err => console.error("Error catched", err))
+    .command("iscroecho", async ctx =>
+        await ctx.reply(`Ви напейсали: ${ctx.message.text}`)
+    )
     .command("iscromute", async ctx => {
         let {status} = await ctx.telegram.getChatMember(ctx.message.chat.id, ctx.message.from.id);
         let [_, flag, ...__] = (ctx.message.text).trim().split(" ");
 
         if (flag === undefined) {
-            return await ctx.reply(`Заблокировать сообщения Huurmōnec. На данный момент ${isHuurmoonecMuted ? "" : "не"} забанен. Команда доступна админам. Работает по принципу автоудаления каждого поступающего от него сообщения. Доки: \n 1) «/iscromute -t» (мут); \n 2) «/iscromute -f» (размут); \n 3) «/iscromute -n» (смена состояния на обратное). \n У аргументов команды есть синонимы: \n 1) -t/--true; \n 2) -f/--false; 3) -n/-i/-c/--neg/--not/--inv/--compl.`)
+            return await ctx.reply(`Заблокировать сообщения Huurmōnec. На данный момент ${isHuurmoonecMuted ? "" : "не"} забанен. Команда доступна админам. Работает по принципу автоудаления каждого поступающего от него сообщения. Доки: \n 1) «/iscromute -t» (мут); \n 2) «/iscromute -f» (размут); \n 3) «/iscromute -n» (смена состояния на обратное). \n У аргументов команды есть синонимы: \n 1) -t / --true; \n 2) -f / --false; \n 3) -n / -i / -c / --neg / --not / --inv / --compl.`)
         }
         switch (true) {
             case (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID:
@@ -77,18 +77,28 @@ let isHuurmoonecMuted = false;
 
 (async () => {
     await bot.telegram.sendMessage(process.env.COVINOC_ID, "Я родился! ^___^ Причина: ты мя сейчас врубила и деплой окончен.");
-    await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, "Я родился! ^___^ Причина: ты мя сейчас врубила и деплой окончен.");
 })();
+setInterval(async () => {
+    console.log(process.env.COVINOC_ID, `Мой скедулер скоро пнёт REST API (${config.REST_API_URL}), чтобы тот мя взаимно пнул…`);
+    // await bot.telegram.sendMessage(process.env.COVINOC_ID, `Мой скедулер скоро пнёт REST API (${config.REST_API_URL}), чтобы тот мя взаимно пнул…`);
+    await axios.post(config.REST_API_URL)
+        .then(async _ => {
+            console.log(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я не спал)!");
+            // await bot.telegram.sendMessage(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я не спал)!")
+        })
+        .catch(async err => {
+            console.log(process.env.COVINOC_ID, `У мя ошибка с фетчем: ${JSON.stringify(err, null, 2)}`);
+            // await bot.telegram.sendMessage(process.env.COVINOC_ID, `У мя ошибка с фетчем: ${JSON.stringify(err, null, 2)}`)
+        });
+}, config.FETCH_LOOP_PERIOD);
 process
     .on('SIGINT', async () => {
         await bot.telegram.sendMessage(process.env.COVINOC_ID, "Я упал! Причина: ты мя вырубила.");
-        await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, "Я упал! Причина: ты мя вырубила.");
         await bot.telegram.deleteWebhook();
         bot.stop('SIGINT');
     })
     .on('SIGTERM', async () => {
         await bot.telegram.sendMessage(process.env.COVINOC_ID, `Я упал! Ищи причину в ошибке с API.`);
-        await bot.telegram.sendMessage(process.env.COVINOC_BUNKER_ID, `Я упал! Ищи причину в ошибке с API.`);
         await bot.telegram.deleteWebhook();
         bot.stop('SIGTERM');
     });
