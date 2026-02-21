@@ -34,7 +34,7 @@ bot
         switch (true) {
             case (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID:
                 return await ctx.reply("Нѣтъ.");
-            case status === "creator":
+            case (ctx.message.from.id).toString() === process.env.ISCRA_ID:
             case status === "administrator":
                 break;
             default:
