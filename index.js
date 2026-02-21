@@ -79,25 +79,25 @@ bot
     // await bot.telegram.sendMessage(process.env.COVINOC_ID, "Я родился! ^___^ Причина: ты мя сейчас врубила и деплой окончен.");
 })();
 setInterval(async () => {
-    // console.log(`Мой скедулер скоро пнёт REST API (${config.REST_API_URL}), чтобы тот мя взаимно пнул…`);
-    await bot.telegram.sendMessage(process.env.COVINOC_ID, `Мой скедулер скоро пнёт REST API (${config.REST_API_URL}), чтобы тот мя взаимно пнул…`);
+    console.log(`Мой скедулер скоро пнёт REST API (${config.REST_API_URL}), чтобы тот мя взаимно пнул…`);
+    // await bot.telegram.sendMessage(process.env.COVINOC_ID, `Мой скедулер скоро пнёт REST API (${config.REST_API_URL}), чтобы тот мя взаимно пнул…`);
     await axios.post(config.REST_API_URL, process.env.DOMAIN, {
         headers: {'Content-Type': 'application/json'}
     })
         .then(async _ => {
-            // console.log("REST API пнул успешно (чтоб' я не спал)!");
-            await bot.telegram.sendMessage(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я больше не засыпал от отсутствия трафика)!")
+            console.log("REST API пнул успешно (чтоб' я не спал)!");
+            // await bot.telegram.sendMessage(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я больше не засыпал от отсутствия трафика)!")
         })
         .catch(async err => {
             if (error.response) {
-                // console.log(`REST API ответил ошибкой ${err.response.status}: «${err.response.data}»`);
-                await bot.telegram.sendMessage(process.env.COVINOC_ID, `REST API ответил ошибкой: ${JSON.stringify(err, null, 2)}`)
+                console.log(`REST API ответил ошибкой ${err.response.status}: «${err.response.data}»`);
+                // await bot.telegram.sendMessage(process.env.COVINOC_ID, `REST API ответил ошибкой: ${JSON.stringify(err, null, 2)}`)
             } else if (error.request) {
-                // console.log(`Мой фетч прервался с ошибкой: «${error.request}»`);
-                await bot.telegram.sendMessage(process.env.COVINOC_ID, `Мой фетч прервался с ошибкой: «${error.request}»`);
+                console.log(`Мой фетч прервался с ошибкой: «${error.request}»`);
+                // await bot.telegram.sendMessage(process.env.COVINOC_ID, `Мой фетч прервался с ошибкой: «${error.request}»`);
             } else {
-                // console.log(`В ходе настроек моего фетча случилась ошибка: «${error.message}»`);
-                await bot.telegram.sendMessage(process.env.COVINOC_ID, `В ходе настроей моего фетча случилась ошибка: «${error.message}»`);
+                console.log(`В ходе настроек моего фетча случилась ошибка: «${error.message}»`);
+                // await bot.telegram.sendMessage(process.env.COVINOC_ID, `В ходе настроей моего фетча случилась ошибка: «${error.message}»`);
             }
         });
 }, config.FETCH_LOOP_PERIOD);
