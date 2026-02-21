@@ -86,7 +86,7 @@ setInterval(async () => {
     })
         .then(async _ => {
             // console.log("REST API пнул успешно (чтоб' я не спал)!");
-            await bot.telegram.sendMessage(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я не спал)!")
+            await bot.telegram.sendMessage(process.env.COVINOC_ID, "REST API пнул успешно (чтоб' я больше не засыпал от отсутствия трафика)!")
         })
         .catch(async err => {
             if (error.response) {
