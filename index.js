@@ -70,6 +70,7 @@ bot
     })
     .on("message", async ctx => {
         console.log(`Ви напейсали: ${JSON.stringify(ctx.message, null, 4)}`);
+        console.log(isHuurmoonecMuted);
         if (isHuurmoonecMuted && (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID) {
             await ctx.deleteMessage();
         }
