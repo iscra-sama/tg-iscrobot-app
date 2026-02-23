@@ -18,18 +18,25 @@ app.get(/.*/, (req, res) => {
     res.end("Hello, Iscra-chan!");
 });
 
-let isHuurmoonecMuted = false;
 bot
     .catch(err => console.error("Error catched", err))
-    .command("iscroecho", async ctx =>
+    .on("message", async (ctx, next) => {
+        console.log(`Ви напейсали: ${JSON.stringify(ctx.message, null, 4)}`);
+        console.log(config.isHuurmoonecMuted);
+        if (config.isHuurmoonecMuted && (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID) {
+            await ctx.deleteMessage();
+        }
+        next();
+    })
+    .command("iscroecho", async ctx => {
         await ctx.reply(`Ви напейсали: ${ctx.message.text}`)
-    )
+    })
     .command("iscromute", async ctx => {
         let {status} = await ctx.telegram.getChatMember(ctx.message.chat.id, ctx.message.from.id);
         let [_, flag, ...__] = (ctx.message.text).trim().split(" ");
 
         if (flag === undefined) {
-            return await ctx.reply(`Заблокировать сообщения Huurmōnec. На данный момент ${isHuurmoonecMuted ? "" : "не"} забанен. Команда доступна админам. Работает по принципу автоудаления каждого поступающего от него сообщения. Доки: \n 1) «/iscromute -t» (мут); \n 2) «/iscromute -f» (размут); \n 3) «/iscromute -n» (смена состояния на обратное). \n У аргументов команды есть синонимы: \n 1) -t / --true; \n 2) -f / --false; \n 3) -n / -i / -c / --neg / --not / --inv / --compl.`)
+            return await ctx.reply(`Заблокировать сообщения Huurmōnec. На данный момент ${config.isHuurmoonecMuted ? "" : "не"} забанен. Команда доступна админам. Работает по принципу автоудаления каждого поступающего от него сообщения. Доки: \n 1) «/iscromute -t» (мут); \n 2) «/iscromute -f» (размут); \n 3) «/iscromute -n» (смена состояния на обратное). \n У аргументов команды есть синонимы: \n 1) -t / --true; \n 2) -f / --false; \n 3) -n / -i / -c / --neg / --not / --inv / --compl.`)
         }
         switch (true) {
             case (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID:
@@ -47,12 +54,12 @@ bot
             case "-t":
             case "--true":
                 await ctx.reply("Huurmōnec заглушён.");
-                isHuurmoonecMuted = true;
+                config.isHuurmoonecMuted = true;
                 break;
             case "-f":
             case "--false":
                 await ctx.reply("Huurmōnec может пейсать.");
-                isHuurmoonecMuted = false;
+                config.isHuurmoonecMuted = false;
                 break;
             case "-n":
             case "-i":
@@ -61,18 +68,11 @@ bot
             case "--neg":
             case "--inv":
             case "--compl":
-                await ctx.reply(`Право Huurmōnec изменено: теперь он ${isHuurmoonecMuted ? "может" : "не может"} писать.`)
-                isHuurmoonecMuted = !isHuurmoonecMuted;
+                await ctx.reply(`Право Huurmōnec изменено: теперь он ${config.isHuurmoonecMuted ? "может" : "не может"} писать.`)
+                config.isHuurmoonecMuted = !config.isHuurmoonecMuted;
                 break;
             default:
                 await ctx.reply("Неверный аргумент команды. Читайте документацию (^^)\".");
-        }
-    })
-    .on("message", async ctx => {
-        console.log(`Ви напейсали: ${JSON.stringify(ctx.message, null, 4)}`);
-        console.log(isHuurmoonecMuted);
-        if (isHuurmoonecMuted && (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID) {
-            await ctx.deleteMessage();
         }
     });
 
