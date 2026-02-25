@@ -24,7 +24,7 @@ bot
         console.log(`Ви напейсали: ${JSON.stringify(ctx.message, null, 4)}`);
         console.log(config.isHuurmoonecMuted);
         if (config.isHuurmoonecMuted && (ctx.message.from.id).toString() === process.env.HUURMOONEC_ID) {
-            await ctx.deleteMessage();
+            return await ctx.deleteMessage();
         }
         next();
     })
